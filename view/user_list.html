@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>follow the money</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <link rel="stylesheet" href="../script/font-awesome-4.7.0/css/font-awesome.min.css">
+
+    <link href="../script/bootstrap-datepicker-thai/css/datepicker.css" rel="stylesheet">
+    <script type="text/javascript" src="../script/bootstrap-datepicker-thai/js/bootstrap-datepicker.js"></script>
+    <script type="text/javascript" src="../script/bootstrap-datepicker-thai/js/bootstrap-datepicker-thai.js"></script>
+    <script type="text/javascript" src="../script/bootstrap-datepicker-thai/js/locales/bootstrap-datepicker.th.js"></script>
+</head>
+<body>
+
+<div class="jumbotron text-center jumbo-mb-0">
+  <h1>Follow the Money</h1>
+  <p>Resize this responsive page to see the effect!</p> 
+</div>
+
+<div class="row justify-content-center">
+  
+    <div class="col-12 mt-5">
+        <div class="ml-5">
+          <a href="../index.html">Back </a>
+        </div>
+    </div>
+
+    <div class="col-sm-8 col-md-8 col-lg-8 col-xl-7 mt-5">
+        <div class="row justify-content-center">
+            <div class="col-12 text-center my-3">
+                <h4>
+                    รายชื่อสมาชิก 
+                    <span class="text-danger">Follow The Money</span>
+                </h4>
+            </div>
+        </div>
+
+        <table id="user_list" class="table table-striped table-dark">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">ชื่อ</th>
+                <th scope="col">นามสกุล</th>
+                <th scope="col">วันเกิด</th>
+                <th scope="col">Email</th>
+                <th scope="col">เพศ</th>
+                <th scope="col">วันที่สมัคร</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr id="user-table-loading">
+                <td colspan="7" class="text-center">
+                  <div class="spinner-border text-danger" role="status">
+                    <span class="sr-only">Loading...</span>
+                  </div>
+                </td>
+              </tr>
+             
+            </tbody>
+          </table>
+
+    </div>
+</div>
+
+<script>
+    $(".datepicker").datepicker({
+        language:'th-th',
+        format:'dd/mm/yyyy',
+        autoclose: true
+    });
+</script>
+
+</body>
+</html>
+
+<style>
+    .jumbo-mb-0 {
+        margin-bottom: 0px;
+    }
+
+    .date-input {
+        border-color: #4335dc;
+        background-image: url("img/svg/date-range.svg");
+        background-repeat: no-repeat;
+        background-position: right calc(0.375em + 0.1875rem) center;
+        background-size: 24px;
+    }
+</style>
+
+<script>
+
+    var head = {
+                id: 0,
+                firstname: 0,
+                lastname: 0,
+                email: 0,
+                sex: 0,
+                birthdate: 0,
+                create_at: 0,
+               }
+
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbzF3MJCzESCim7x1rSEE9WO2xO7DZMS8UJMr5ez9t_IlcrDYEpVUXtaQBGy-q6L35uDMA/exec';
+
+    fetch(scriptURL, {
+        method: 'GET',
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            crate_data_table(data);
+        })
+        .catch(error => {
+            console.error('Error!', error.message);
+        });
+    
+    function crate_data_table(data) {
+
+      var table = document.getElementById("user_list");
+      // console.log(data.length);
+      const options = { year: 'numeric', month: 'long', day: 'numeric', locale: 'th-TH' };
+      tableBody = $("table tbody");
+      tbody = '';
+        
+      for (var i = 0; i < data.length; i++ ) {
+
+        const get_create_at = new Date(data[i][1]); // create_at
+        const create_at = get_create_at.toLocaleDateString('th-TH', options);
+
+        const get_birthdate = new Date(data[i][6]); // birthdate
+              get_birthdate.setFullYear(get_birthdate.getFullYear() - 543);
+        const birthdate = get_birthdate.toLocaleDateString('th-TH', options);
+
+        tbody = tbody+'<tr>';
+        //start tr
+        tbody = tbody+'<td>'+data[i][0]+'</td>' // id
+        tbody = tbody+'<td>'+data[i][2]+'</td>' // first_name
+        tbody = tbody+'<td>'+data[i][3]+'</td>' // last_name
+        tbody = tbody+'<td>'+birthdate+'</td>' // birthdate
+        tbody = tbody+'<td>'+data[i][4]+'</td>' // e-mail
+        tbody = tbody+'<td>'+data[i][5]+'</td>' // sex
+        tbody = tbody+'<td>'+create_at+'</td>' // create_at
+        //end tr
+        tbody = tbody+'</tr>'
+      }
+      
+      $('#user-table-loading').hide()
+      tableBody.append(tbody); // render Table
+      // console.log(tbody)
+    }
+
+    function init() {
+        console.log('Hello')
+    }
+
+    init();
+
+</script>

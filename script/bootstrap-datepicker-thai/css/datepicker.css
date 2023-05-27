@@ -85,6 +85,8 @@
 }
 .datepicker > div {
   display: none;
+  width: 282px;
+  color: #dd1f79;
 }
 .datepicker.days div.datepicker-days {
   display: block;
@@ -96,6 +98,7 @@
   display: block;
 }
 .datepicker table {
+  width: 100%;
   margin: 0;
 }
 .datepicker td,
@@ -470,4 +473,12 @@
   border: 1px solid #ccc;
   margin-left: -5px;
   margin-right: -5px;
+}
+
+.next {
+  color: darkgray;
+}
+
+.prev {
+  color: darkgray;
 }

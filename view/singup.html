@@ -25,47 +25,46 @@
 
 <div class="row">
     <div class="col-sm-8 col-md-8 col-lg-8 col-xl-7 mt-5">
-
+        <div class="ml-5">
+            <a href="../index.html" class="btn btn-outline-danger" type="submit">
+                <i class="fa fa-home" aria-hidden="true"></i>
+                Home
+            </a>
+        </div>
     </div>
-    <div class="col-sm-4 col-md-4 col-lg-4 col-xl-3 mt-5">
+    <div class="col-sm-4 col-md-4 col-lg-4 col-xl-3 mt-5 f-18">
         <form method="post" name="hello-sheet">
             <div class="form-row">
                 <div class="col-md-12 col-xl-10 mb-2">
-                <label for="validationServer01">ชื่อ</label>
-                <input type="text" class="form-control is-valid" id="validationServer01" name="firstname" value="" required>
-                <div class="valid-feedback">
-                    Firstname!
-                </div>
+                <label for="first_name">ชื่อ</label>
+                <input type="text" class="form-control" id="validationServer01" name="first_name" value="" required>
+
                 </div>
                 <div class="col-md-12 col-xl-10 mb-2">
-                <label for="validationServer02">นามสกุล</label>
-                <input type="text" class="form-control is-valid" id="validationServer02" name="lastname" value="" required>
-                <div class="valid-feedback">
-                    Looks good!
-                </div>
+                <label for="last_name">นามสกุล</label>
+                <input type="text" class="form-control" id="validationServer02" name="last_name" value="" required>
                 </div>
             </div>
             <div class="form-row">
                 <div class="col-md-12 col-xl-10 mb-2">
-                <label for="validationServer03">Email</label>
-                <input type="text" class="form-control is-invalid" id="validationServer03" name="email" aria-describedby="validationServer03Feedback" required>
-                <div id="validationServer03Feedback" class="invalid-feedback">
-                    กรุณาระบุที่อยู่ Email
-                </div>
+                <label for="email">Email</label>
+                <input type="text" class="form-control" id="validationServer03" name="email" aria-describedby="validationServer03Feedback" required>
                 </div>
                 <div class="col-md-12 col-xl-10 mb-2">
+                    <label class="form-check-label">เพศ</label>
+                    <br>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="male" value="ชาย">
-                        <label class="form-check-label" for="inlineRadio1">ชาย</label>
+                        <input class="form-check-input" type="radio" name="sex" id="male" value="ชาย" required>
+                        <label class="form-check-label" for="male">ชาย</label>
                       </div>
                       <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="female" value="หญิง">
-                        <label class="form-check-label" for="inlineRadio2">หญิง</label>
+                        <input class="form-check-input" type="radio" name="sex" id="female" value="หญิง" required>
+                        <label class="form-check-label" for="female">หญิง</label>
                       </div>
                 </div>
                 <div class="col-md-12 col-xl-10 mb-2">
-                    <label for="validationServer05">วันเกิด</label>
-                    <input type="text" id="birthdath" name="birthdath" class="datepicker form-control"/>
+                    <label for="birthdath">วันเกิด</label>
+                    <input type="text" id="birthdath" name="birthdath" autocomplete="off" class="datepicker form-control" required>
                     <div id="validationServer05Feedback" class="invalid-feedback">
                         วัน-เดือน-ปีเกิด
                     </div>
@@ -78,7 +77,7 @@
                     ยอมรับ
                 </label>
                 <div  id="invalidCheck3Feedback" class="invalid-feedback">
-                    ฉันยอมรับข้อเสนอ
+                    ฉันยอมรับในการเผยแพร่ข้อมูลส่วนตัวของฉัน
                 </div>
                 </div>
             </div>
@@ -110,12 +109,15 @@
         background-position: right calc(0.375em + 0.1875rem) center;
         background-size: 24px;
     }
+    .f-18 {
+        font-size: 18px;
+    }
 </style>
 
 <script>
     const scriptURL = 'https://script.google.com/macros/s/AKfycbzF3MJCzESCim7x1rSEE9WO2xO7DZMS8UJMr5ez9t_IlcrDYEpVUXtaQBGy-q6L35uDMA/exec'
     const form = document.forms['hello-sheet']
-  
+
     form.addEventListener('submit', e => {
       e.preventDefault()
       fetch(scriptURL, { method: 'POST', body: new FormData(form)})
