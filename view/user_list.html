@@ -16,14 +16,20 @@
     <script type="text/javascript" src="../script/bootstrap-datepicker-thai/js/bootstrap-datepicker-thai.js"></script>
     <script type="text/javascript" src="../script/bootstrap-datepicker-thai/js/locales/bootstrap-datepicker.th.js"></script>
 </head>
+<style>
+  body {
+    font-family: "Lucida Console", "Courier New", monospace;
+    background-color: #dadada;
+  }
+</style>
 <body>
 
-<div class="jumbotron text-center jumbo-mb-0">
-  <h1>Follow the Money</h1>
-  <p>Resize this responsive page to see the effect!</p> 
-</div>
+  <div class="jumbotron text-center jumbo-mb-0">
+    <h1>Follow the Money</h1>
+    <p>Resize this responsive page to see the effect!</p> 
+  </div>
 
-<div class="row justify-content-center">
+  <div class="row justify-content-center">
   
     <div class="col-12 mt-5">
         <div class="ml-5">
@@ -31,54 +37,82 @@
         </div>
     </div>
 
-    <div class="col-sm-8 col-md-8 col-lg-8 col-xl-7 mt-5">
-        <div class="row justify-content-center">
-            <div class="col-12 text-center my-3">
-                <h4>
-                    รายชื่อสมาชิก 
-                    <span class="text-danger">Follow The Money</span>
-                </h4>
+    <div class="col-9 mt-5">
+
+      <div class="card border-warning text-white">
+        <h5 class="card-header bg-secondary">ค้นหา</h5>
+        <div class="card-body bg-dark">
+
+          <div class="row justify-content-center">
+            <div class="col-3 text-left my-3">
+              <label for="filter_full_name">ชื่อ-นามสกุล</label>
+              <input id="filter_full_name" type="text" class="form-control">
             </div>
+            <div class="col-3 text-left my-3">
+              <label for="filter_email">Email</label>
+              <input id="filter_email" type="text" class="form-control">
+            </div>
+            <div class="col-3 text-left my-3">
+              <label for="filter_sex">เพศ</label>
+              <input id="filter_sex" type="text" class="form-control">
+            </div>
+            <div class="col-3 text-left my-3">
+              <label for="filter_birthday">วันเกิด</label>
+              <input type="text" id="filter_birthday" name="birthday" autocomplete="off" class="datepicker form-control" required>
+            </div>
+            <div class="col-12 text-right">
+              <button id="searchBtn" class="btn btn-md btn-info" type="button">ค้นหา</button>
+            </div>
+          </div>
+
         </div>
+      </div>
 
-        <table id="user_list" class="table table-striped table-dark">
-            <thead>
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">ชื่อ</th>
-                <th scope="col">นามสกุล</th>
-                <th scope="col">วันเกิด</th>
-                <th scope="col">Email</th>
-                <th scope="col">เพศ</th>
-                <th scope="col">วันที่สมัคร</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr id="user-table-loading">
-                <td colspan="7" class="text-center">
-                  <div class="spinner-border text-danger" role="status">
-                    <span class="sr-only">Loading...</span>
-                  </div>
-                </td>
-              </tr>
-             
-            </tbody>
-          </table>
+      <div class="row justify-content-center">
+          <div class="col-12 text-center my-3 mt-3">
+              <h4>
+                  รายชื่อสมาชิก 
+                  <span class="text-danger">Follow The Money</span>
+              </h4>
+          </div>
+      </div>
 
-    </div>
-</div>
+      <table id="user_list" class="table table-striped table-dark">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">ชื่อ</th>
+              <th scope="col">นามสกุล</th>
+              <th scope="col">วันเกิด</th>
+              <th scope="col">Email</th>
+              <th scope="col">เพศ</th>
+              <th scope="col">วันที่สมัคร</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr id="user-table-loading">
+              <td colspan="7" class="text-center">
+                <div class="spinner-border text-danger" role="status">
+                  <span class="sr-only">Loading...</span>
+                </div>
+              </td>
+            </tr>        
+          </tbody>
+        </table>
 
-<script>
-    $(".datepicker").datepicker({
-        language:'th-th',
-        format:'dd/mm/yyyy',
-        autoclose: true
-    });
-</script>
+      </div>
+  </div>
+
+  <script>
+      $(".datepicker").datepicker({
+          language:'th-th',
+          format:'dd/mm/yyyy',
+          autoclose: true
+      });
+  </script>
 
 </body>
 </html>
-
 <style>
     .jumbo-mb-0 {
         margin-bottom: 0px;
@@ -92,43 +126,55 @@
         background-size: 24px;
     }
 </style>
-
 <script>
 
-    var head = {
-                id: 0,
-                firstname: 0,
-                lastname: 0,
-                email: 0,
-                sex: 0,
-                birthdate: 0,
-                create_at: 0,
-               }
-
     const scriptURL = 'https://script.google.com/macros/s/AKfycbzF3MJCzESCim7x1rSEE9WO2xO7DZMS8UJMr5ez9t_IlcrDYEpVUXtaQBGy-q6L35uDMA/exec';
+    
+    $("#searchBtn").click(function(){
+      $('#user_list tbody tr').hide();
+      $('#user-table-loading').show();
+      get_searchName();
+    });
+    
+        
+    function getData(url_controller) {
 
-    fetch(scriptURL, {
+      fetch(url_controller, {
         method: 'GET',
         })
         .then(response => response.json())
         .then(data => {
             console.log(data);
-            crate_data_table(data);
+            if(data.length > 0){
+              crate_data_table(data);
+            }else{
+              crate_data_table_empty();
+            }
         })
         .catch(error => {
             console.error('Error!', error.message);
         });
+
+    }
+
+    function crate_data_table_empty() {
+      var table = document.getElementById("user_list");
+      // console.log(data.length);
+      const options = { year: 'numeric', month: 'long', day: 'numeric', locale: 'th-TH' };
+      tableBody = $("table tbody");
+      tbody = '<tr class="bg-light"><td colspan="7" class="text-center text-danger text-bold mt-2"><h5>-ไม่พบข้อมูล-</h5></td></tr>';
+      $('#user-table-loading').hide();
+      $('#filter_birthday').prop( "disabled", false );
+      tableBody.append(tbody); // render Table
+    }
     
     function crate_data_table(data) {
-
       var table = document.getElementById("user_list");
       // console.log(data.length);
       const options = { year: 'numeric', month: 'long', day: 'numeric', locale: 'th-TH' };
       tableBody = $("table tbody");
       tbody = '';
-        
       for (var i = 0; i < data.length; i++ ) {
-
         const get_create_at = new Date(data[i][1]); // create_at
         const create_at = get_create_at.toLocaleDateString('th-TH', options);
 
@@ -149,15 +195,27 @@
         tbody = tbody+'</tr>'
       }
       
-      $('#user-table-loading').hide()
+      $('#user-table-loading').hide();
+      $('#filter_birthday').prop( "disabled", false );
       tableBody.append(tbody); // render Table
       // console.log(tbody)
     }
 
+    function get_searchName() {
+      var keyWord = $('#filter_full_name').val();
+      var url_searchName = scriptURL+"?ctrl=" + encodeURIComponent('getSearchName')+
+        "&search=" + encodeURIComponent(keyWord);
+      
+      getData(url_searchName);
+    }
+
     function init() {
-        console.log('Hello')
+      console.log('Welcom to Userlist')
+      $('#filter_birthday').prop( "disabled", true );
+
+      var url_getAll = scriptURL+"?ctrl=" + encodeURIComponent('getAll');
+      getData(url_getAll);
     }
 
     init();
-
 </script>
