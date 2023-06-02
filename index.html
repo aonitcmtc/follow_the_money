@@ -4,10 +4,10 @@
     <title>follow the money</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="script/bootstrap4.6.2_lib/bootstrap.min.css">
+    <script src="script/bootstrap4.6.2_lib/jquery.slim.min.js"></script>
+    <script src="script/bootstrap4.6.2_lib/popper.min.js"></script>
+    <script src="script/bootstrap4.6.2_lib/bootstrap.bundle.min.js"></script>
 
     <link rel="stylesheet" href="script/font-awesome-4.7.0/css/font-awesome.min.css">
 
@@ -37,17 +37,26 @@
             <i class="fa fa-home" aria-hidden="true"></i>
           </a>
         </li>
-        <div class="dropdown show">
-          <a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Users
           </a>
-        
-          <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
             <a class="dropdown-item" href="view/user_list.html">User List</a>
             <a class="dropdown-item" href="#">Update User</a>
             <a class="dropdown-item" href="#">Manage User</a>
           </div>
-        </div>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Dropdown link
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="#">Action</a>
+            <a class="dropdown-item" href="#">Another action</a>
+            <a class="dropdown-item" href="#">Something else here</a>
+          </div>
+        </li>
         <li class="nav-item">
           <a class="nav-link" href="#">Link</a>
         </li>
