@@ -23,11 +23,29 @@
     <!-- sweetalert2 -->
     <script src="../script/sweetalert2@11.js"></script>
 </head>
+<style>
+    body {
+      font-family: "Lucida Console", "Courier New", monospace;
+      background-color: #131225;
+      color: #fff;
+    }
+
+    .head-color {
+        background-color: gold;
+    }
+
+    hr {
+        border-top: 1px solid #fff;
+    }
+</style>
 <body>
 
-<div class="jumbotron text-center jumbo-mb-0">
-  <h1>Follow the Money</h1>
-  <p>Resize this responsive page to see the effect!</p> 
+<div class="text-center head-color py-3">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-6 col-lg-6 text-center">
+        <img src="../img/static/my-logo.png" alt="" height="200">
+        </div>
+    </div>
 </div>
 
 <div class="row">
@@ -169,6 +187,7 @@
             .then(response => response.json())
             .then(data => {
                 console.log(data);
+                $('#password').val('');
                 if(data.result == 'success'){
                     name = $('#email_user').val();
                     local_name = md5('FollowTheMoney')
@@ -178,9 +197,6 @@
                     localStorage.setItem(local_val, data.leval); // SET LEVEL USER
                     // console.log(localStorage.getItem(local_name));
                     // console.log(localStorage.getItem(local_val));
-
-                    $('#email_user').val('');
-                    $('#password').val('');
 
                     redirectToWelcome();
                     // Swal.fire({
@@ -220,7 +236,11 @@
     })
 
     $('#checkLogin').click(function(){
-        get_searchName()
+        if($('#email_user').val() == '' || $('#password').val() == ''){
+            $('#password').val('')
+        }else{
+            get_searchName()
+        }
     });
 
     function get_searchName() {
