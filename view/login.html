@@ -181,22 +181,22 @@
 
                     $('#email_user').val('');
                     $('#password').val('');
-                    Swal.fire({
-                        title: 'Email หรือ Password ไม่ถูกต้อง',
-                        icon: 'success',
-                        timer: 500,
-                        showConfirmButton: false,
-                        showCancelButton: false,
-                        didOpen: () => {
-                            // Swal.showLoading()
-                        },
-                        willClose: () => {
-                            clearInterval(timerInterval)
-                        }
-                        }).then((result) => {
 
-                        redirectToWelcome();
-                    })
+                    redirectToWelcome();
+                    // Swal.fire({
+                    //     title: 'Email หรือ Password ไม่ถูกต้อง',
+                    //     icon: 'success',
+                    //     timer: 500,
+                    //     showConfirmButton: false,
+                    //     showCancelButton: false,
+                    //     didOpen: () => {
+                    //         // Swal.showLoading()
+                    //     },
+                    //     willClose: () => {
+                    //         clearInterval(timerInterval)
+                    //     }
+                    //     }).then((result) => {
+                    // })
 
                 }else{
                     Swal.fire({
