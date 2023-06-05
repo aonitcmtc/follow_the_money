@@ -16,6 +16,8 @@
     <script type="text/javascript" src="../script/bootstrap-datepicker-thai/js/bootstrap-datepicker.js"></script>
     <script type="text/javascript" src="../script/bootstrap-datepicker-thai/js/bootstrap-datepicker-thai.js"></script>
     <script type="text/javascript" src="../script/bootstrap-datepicker-thai/js/locales/bootstrap-datepicker.th.js"></script>
+    <!-- Encryp MD5 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-md5/2.18.0/js/md5.min.js"></script>
 </head>
 <body>
 
@@ -34,22 +36,30 @@
         </div>
     </div>
     <div class="col-sm-4 col-md-4 col-lg-4 col-xl-3 mt-5 f-18">
-        <form method="post" name="hello-sheet">
+        <form id="sing-up-form" method="post" name="hello-sheet">
             <div class="form-row">
                 <div class="col-md-12 col-xl-10 mb-2">
                 <label for="first_name">ชื่อ</label>
-                <input type="text" class="form-control" id="validationServer01" name="first_name" value="" required>
+                <input type="text" class="form-control" id="first_name" name="first_name" value="" required>
 
                 </div>
                 <div class="col-md-12 col-xl-10 mb-2">
                 <label for="last_name">นามสกุล</label>
-                <input type="text" class="form-control" id="validationServer02" name="last_name" value="" required>
+                <input type="text" class="form-control" id="last_name" name="last_name" value="" required>
                 </div>
             </div>
             <div class="form-row">
                 <div class="col-md-12 col-xl-10 mb-2">
-                <label for="email">Email</label>
-                <input type="text" class="form-control" id="validationServer03" name="email" aria-describedby="validationServer03Feedback" required>
+                    <label for="email">Email</label>
+                    <input type="text" class="form-control" id="email" name="email" aria-describedby="validationServer03Feedback" required>
+                </div>
+                <div class="col-md-12 col-xl-10 mb-2">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" id="password" name="password" aria-describedby="validationServer03Feedback" required>
+                </div>
+                <div class="col-md-12 col-xl-10 mb-2">
+                    <label for="confirm-password">Confirm-Password</label>
+                    <input type="password" class="form-control" id="confirm-password" name="confirm-password" aria-describedby="validationServer03Feedback" required>
                 </div>
                 <div class="col-md-12 col-xl-10 mb-2">
                     <label class="form-check-label">เพศ</label>
@@ -82,7 +92,7 @@
                 </div>
                 </div>
             </div>
-            <button class="btn btn-primary" type="submit">Submit form</button>
+            <button id="sendUserData" class="btn btn-primary" type="submit">Submit form</button>
         </form> 
     </div>
 </div>
@@ -118,11 +128,39 @@
 <script>
     const scriptURL = 'https://script.google.com/macros/s/AKfycbzF3MJCzESCim7x1rSEE9WO2xO7DZMS8UJMr5ez9t_IlcrDYEpVUXtaQBGy-q6L35uDMA/exec'
     const form = document.forms['hello-sheet']
+    var status = 0
 
     form.addEventListener('submit', e => {
-      e.preventDefault()
-      fetch(scriptURL, { method: 'POST', body: new FormData(form)})
-        .then(response => alert("บันทึกข้อมูลเรียบร้อยแล้ว.."))
-        .catch(error => console.error('Error!', error.message))
+        e.preventDefault()
+        fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+            .then(response => alert("บันทึกข้อมูลเรียบร้อยแล้ว.."))
+            .catch(error => console.error('Error!', error.message))
     })
+
+    $('#sendUserData').click(function(){
+        if(status != 1){
+            alert('Password ไม่ถูกต้อง!')
+            return false
+        }
+    });
+
+    $("#password").change(function(){
+        var encryp = $(this).val()
+        $(this).val(md5(encryp))
+    });
+
+    $("#confirm-password").change(function(){
+        var encryp = $(this).val()
+        // alert('encryp! '+md5(encryp)+' // '+$("#password").val()) // debug dev
+        if(md5(encryp) == $("#password").val()) {
+            $(this).val(md5(encryp))
+            status = 1
+            alert('Sucessfully!')
+        }else{
+            $(this).val(md5(encryp))
+            status = 0
+            alert('Error!')
+            return false;
+        }
+    });
   </script>

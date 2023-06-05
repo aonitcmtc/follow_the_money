@@ -51,7 +51,7 @@
     </div>
 
     <div class="col-9 mt-5">
-      <div class="card border-warning text-white">
+      <!-- <div class="card border-warning text-white">
         <h5 class="card-header bg-secondary">ค้นหา</h5>
         <div class="card-body bg-dark">
 
@@ -77,19 +77,17 @@
             </div>
           </div>
 
-        </div>
+        </div> -->
       </div>
 
-      <div class="row justify-content-center">
-          <div class="col-12 text-center my-3 mt-3">
-              <h4>
-                  รายชื่อสมาชิก 
-                  <span class="text-danger">Follow The Money</span>
-              </h4>
-          </div>
+      <div class="col-12 text-center my-3 mt-3">
+          <h4>
+              รายชื่อสมาชิก 
+              <span class="text-danger">Follow The Money</span>
+          </h4>
       </div>
 
-      <div class="table-responsive div-curved">
+      <!-- <div class="table-responsive div-curved">
         <table id="user_list" class="table table-striped table-dark">
           <thead>
             <tr>
@@ -113,7 +111,7 @@
           </tbody>
         </table>
         </div>
-    </div>
+    </div> -->
   </div>
 
   <script>
@@ -194,7 +192,7 @@
         const get_create_at = new Date(data[i][1]); // create_at
         const create_at = get_create_at.toLocaleDateString('th-TH', options);
 
-        const get_birthdate = new Date(data[i][7]); // birthdate
+        const get_birthdate = new Date(data[i][6]); // birthdate
               get_birthdate.setFullYear(get_birthdate.getFullYear() - 543);
         const birthdate = get_birthdate.toLocaleDateString('th-TH', options);
 
@@ -205,7 +203,7 @@
         tbody = tbody+'<td>'+data[i][3]+'</td>' // last_name
         tbody = tbody+'<td>'+birthdate+'</td>' // birthdate
         tbody = tbody+'<td>'+data[i][4]+'</td>' // e-mail
-        tbody = tbody+'<td>'+data[i][6]+'</td>' // sex
+        tbody = tbody+'<td>'+data[i][5]+'</td>' // sex
         tbody = tbody+'<td>'+create_at+'</td>' // create_at
         //end tr
         tbody = tbody+'</tr>'
