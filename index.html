@@ -4,18 +4,21 @@
     <title>follow the money</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- bootstrap@4.6.2 -->
     <link rel="stylesheet" href="script/bootstrap4.6.2_lib/bootstrap.min.css">
     <script src="script/bootstrap4.6.2_lib/jquery.slim.min.js"></script>
     <script src="script/bootstrap4.6.2_lib/popper.min.js"></script>
     <script src="script/bootstrap4.6.2_lib/bootstrap.bundle.min.js"></script>
-
+    <!-- font-awesome-4.7 -->
     <link rel="stylesheet" href="script/font-awesome-4.7.0/css/font-awesome.min.css">
-
+    <!-- datepicker-thai -->
     <link href="script/bootstrap-datepicker-thai/css/datepicker.css" rel="stylesheet">
     <script type="text/javascript" src="script/bootstrap-datepicker-thai/js/bootstrap-datepicker.js"></script>
     <script type="text/javascript" src="script/bootstrap-datepicker-thai/js/bootstrap-datepicker-thai.js"></script>
     <script type="text/javascript" src="script/bootstrap-datepicker-thai/js/locales/bootstrap-datepicker.th.js"></script>
     <script src="script/js_on_view/index.js"></script>
+    <!-- Encryp MD5 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-md5/2.18.0/js/md5.min.js"></script>
   </head>
   <body>
 
@@ -47,6 +50,9 @@
             <a class="dropdown-item" href="#">Manage User</a>
           </div>
         </li>
+        <li id="MyBlock" class="nav-item">
+          <a class="nav-link" href="view/welcome.html">MyBlock</a>
+        </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Dropdown link
@@ -64,12 +70,12 @@
           <a class="nav-link disabled">Disabled</a>
         </li>
       </ul>
-      <form class="form-inline my-2 my-lg-0">
+      <form class="form-inline my-2 my-lg-0 mr-3">
         <input class="form-control mr-sm-2" type="search" placeholder="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Search</button>
       </form>
       
-      <a href="view/login.html" class="btn btn-outline-info my-2 mx-2" type="submit">Login</a>
+      <a href="view/login.html" id="login" class="btn btn-outline-info my-2 mx-2" type="submit">Login</a>
       <a href="view/singup.html" class="btn btn-success my-2 mx-2" type="submit">Sign Up</a>
     </div>
   </nav>
@@ -91,5 +97,19 @@
         margin-bottom: 0px;
     }
 </style>
+
+<script>
+  function init() {
+        // Check User Login
+        local_name = md5('FollowTheMoney')
+        if(localStorage.getItem(local_name) != null){
+          $('#login').hide();
+        }else{
+          $('#MyBlock').hide();
+        }
+    }
+
+    init();
+</script>
 
 

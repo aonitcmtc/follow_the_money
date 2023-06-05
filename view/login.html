@@ -4,7 +4,7 @@
     <title>follow the money</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-        <!-- bootstrap@4.6.2 -->
+    <!-- bootstrap@4.6.2 -->
     <link rel="stylesheet" href="../script/bootstrap4.6.2_lib/bootstrap.min.css">
     <script src="../script/bootstrap4.6.2_lib/jquery.slim.min.js"></script>
     <script src="../script/bootstrap4.6.2_lib/popper.min.js"></script>
@@ -20,6 +20,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-md5/2.18.0/js/md5.min.js"></script>
     <!-- jquery-cookie-master -->
     <script src="../script/jquery-cookie-master/src/jquery.cookie.js"></script>
+    <!-- sweetalert2 -->
+    <script src="../script/sweetalert2@11.js"></script>
 </head>
 <body>
 
@@ -39,7 +41,8 @@
 
         <div class="row justify-content-center">
             <div class="col-12 text-center">
-                <h2 class="text-danger">MoocUp Backend: false</h2>
+
+
             </div>
         </div>
 
@@ -132,10 +135,34 @@
     const scriptURL = 'https://script.google.com/macros/s/AKfycbzF3MJCzESCim7x1rSEE9WO2xO7DZMS8UJMr5ez9t_IlcrDYEpVUXtaQBGy-q6L35uDMA/exec'
     const form = document.forms['hello-sheet']
     var url = scriptURL
-    status = 0
 
     form.addEventListener('submit', e => {
         e.preventDefault()
+
+        let timerInterval
+        Swal.fire({
+            title: 'Welcom To MyBlock',
+            html: '<span>Go to Page in <b></b></span>',
+            icon: 'warning',
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: () => {
+                Swal.showLoading()
+                const b = Swal.getHtmlContainer().querySelector('b')
+                timerInterval = setInterval(() => {
+                b.textContent = Swal.getTimerLeft()
+                }, 100)
+            },
+            willClose: () => {
+                clearInterval(timerInterval)
+            }
+            }).then((result) => {
+            /* Read more about handling dismissals below */
+            if (result.dismiss === Swal.DismissReason.timer) {
+                console.log('I was closed by the timer')
+            }
+        })
+
         fetch(scriptURL, { 
             method: 'POST', 
             body: new FormData(form)})
@@ -144,41 +171,53 @@
                 console.log(data);
                 if(data.result == 'success'){
                     name = $('#email_user').val();
-                    // setCookie(name,data.leval,7)
-                    createCookie("loggedIn", "true", 7);
-                    // cookie_name = md5('FollowTheMoney');
-                    // alert(cookie_name);
-                    // $.cookie(cookie_name, name, { expires: 7 });
-                    // console.log($.cookie(cookie_name));
+                    local_name = md5('FollowTheMoney')
+                    local_val = md5('FollowTheMoneyValue')
+
+                    localStorage.setItem(local_name, name); // SET USER
+                    localStorage.setItem(local_val, data.leval); // SET LEVEL USER
+                    // console.log(localStorage.getItem(local_name));
+                    // console.log(localStorage.getItem(local_val));
+
+                    $('#email_user').val('');
+                    $('#password').val('');
+                    Swal.fire({
+                        title: 'Email หรือ Password ไม่ถูกต้อง',
+                        icon: 'success',
+                        timer: 500,
+                        showConfirmButton: false,
+                        showCancelButton: false,
+                        didOpen: () => {
+                            // Swal.showLoading()
+                        },
+                        willClose: () => {
+                            clearInterval(timerInterval)
+                        }
+                        }).then((result) => {
+
+                        redirectToWelcome();
+                    })
+
+                }else{
+                    Swal.fire({
+                        title: 'Email หรือ Password ไม่ถูกต้อง',
+                        html: '<h4 class="text-danger">กรุณากรอก Email&Password อีกครั้ง</h4>',
+                        icon: 'error',
+                        timer: 2000,
+                        showConfirmButton: false,
+                        showCancelButton: false,
+                        didOpen: () => {
+                            // Swal.showLoading()
+                        },
+                        willClose: () => {
+                            clearInterval(timerInterval)
+                        }
+                        }).then((result) => {
+                    })
                 }
             })
             .catch(error => console.error('Error!', error.message))
-
     })
-
-    function createCookie(name, value, days) {
-        var expires = "";
-        if (days) {
-            var date = new Date();
-            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-            expires = "; expires=" + date.toUTCString();
-        }
-        document.cookie = name + "=" + value + expires + "; path=/";
-        
-        // check_cookie
-        var cookies = document.cookie.split(';');
-        for (var i = 0; i < cookies.length; i++) {
-            var cookie = cookies[i].trim();
-
-            // Check if the cookie starts with the desired name
-            if (cookie.startsWith('loggedIn' + '=')) {
-            var cookieValue = cookie.substring('loggedIn'.length + 1);
-            console.log(cookieValue)
-            }
-        }
-
-        console.log('null')
-    }
 
     $('#checkLogin').click(function(){
         get_searchName()
@@ -187,11 +226,25 @@
     function get_searchName() {
       var Email = $('#email_user').val();
       var Pass = md5($('#password').val());
-    //   alert(Pass)
       $('#password').val(Pass)
-    //   url = scriptURL+"?ctrl=" + encodeURIComponent('checkLogin')+
-    //     "&email=" + encodeURIComponent(Email)+
-    //     "&password=" + encodeURIComponent(Pass);
-      
     }
+
+    function redirectToWelcome() {
+        window.location.href = 'welcome.html';
+    }
+
+    function init() {
+        // Check User Login
+        local_name = md5('FollowTheMoney')
+        local_val = md5('FollowTheMoneyValue')
+        console.log(localStorage.getItem(local_name));
+        console.log(localStorage.getItem(local_val));
+        // localStorage.clear();
+
+        if(localStorage.getItem(local_name) != null){
+            redirectToWelcome();
+        }
+    }
+
+    init();
 </script>
