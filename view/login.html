@@ -164,6 +164,8 @@
             icon: 'warning',
             timer: 5000,
             timerProgressBar: true,
+            allowOutsideClick: false,
+            allowEscapeKey: false,
             didOpen: () => {
                 Swal.showLoading()
                 const b = Swal.getHtmlContainer().querySelector('b')
