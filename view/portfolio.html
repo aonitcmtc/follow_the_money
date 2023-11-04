@@ -16,12 +16,14 @@
     <script type="text/javascript" src="../script/bootstrap-datepicker-thai/js/bootstrap-datepicker.js"></script>
     <script type="text/javascript" src="../script/bootstrap-datepicker-thai/js/bootstrap-datepicker-thai.js"></script>
     <script type="text/javascript" src="../script/bootstrap-datepicker-thai/js/locales/bootstrap-datepicker.th.js"></script>
+    <!-- Chart JS -->
+    <script type="text/javascript" src="../script/ChartJS/Chart_js_2_9_4.js"></script>
+
 </head>
 <style>
   body {
     font-family: "Lucida Console", "Courier New", monospace;
     background-color: #131225;
-    color: #fff;
   }
 
   .head-color {
@@ -30,113 +32,65 @@
 </style>
 <body>
 
-  <!-- <div class="text-center head-color py-3">
-    <div class="row justify-content-center">
-      <div class="col-12 col-md-6 col-lg-6 text-center">
-        <img src="../img/static/my-logo.png" alt="" height="200">
-      </div>
-    </div>
-  </div> -->
-
   <div class="container-fluid">
     <div class="row">
       <div id="mynavbar" class="col-12" style="padding: 0;"></div>
     </div>
-
     <div class="row justify-content-center">
       
       <div class="col-2 px-4 py-2">
         <a href="../index.html" class="btn btn-sm btn-outline-warning">
-          <i class="fa fa-home" aria-hidden="true"></i>
+          <i class="fa fa-reply" aria-hidden="true"></i>
         </a>
       </div>
       <div class="col-8 text-center mt-2">
-          <h4 class="text-light">User</h4>
+          <h4 class="text-light">Portfolio</h4>
       </div>
       <div class="col-2 p-2">
-  
+        <!-- text -->
       </div>
-    </div>
-
     <div class="row justify-content-center">
-      <div class="col-12 text-center my-3 mt-2">
-          <h4>
-              <span class="text-danger">Follow The Money</span>
-          </h4>
-      </div>
-    </div>
-
-    <div class="row justify-content-center">
-      <div class="col-10 mt-3">
-        <div class="card border-warning">
-          <h5 class="card-header bg-secondary">
-            รายชื่อสมาชิก 
-            <span class="text-warning">Follow The Money</span>
-          </h5>
-          <div class="card-body bg-dark">
-  
-            <div class="row justify-content-center">
-              <div class="col-12 col-sm-6 col-md-6 col-lg-8 text-left my-3">
-                <label for="filter_full_name">ค้นหา</label>
-                <input id="filter_full_name" type="text" class="form-control">
-              </div>
-              <!--div class="col-12 col-sm-6 col-md-6 col-lg-3 text-left my-3">
-                <label for="filter_email">Email</label>
-                <input id="filter_email" type="text" class="form-control">
-              </div>
-              <div class="col-12 col-sm-6 col-md-6 col-lg-3 text-left my-3">
-                <label for="filter_sex">เพศ</label>
-                <input id="filter_sex" type="text" class="form-control">
-              </div>
-              <div class="col-12 col-sm-6 col-md-6 col-lg-3 text-left my-3">
-                <label for="filter_birthday">วันเกิด</label>
-                <input type="text" id="filter_birthday" name="birthday" autocomplete="off" class="datepicker form-control" required>
-              </div-->
-              <div class="col-12 text-right">
-                <button id="searchBtn" class="btn btn-md btn-info" type="button">
-                  <i class="fa fa-search"></i>
-                </button>
-              </div>
-            </div>
-  
-          </div>
-        </div>
-  
-        <div class="table-responsive div-curved mt-4">
-          <table id="user_list" class="table table-striped table-dark">
-            <thead>
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">ชื่อ</th>
-                <th scope="col">นามสกุล</th>
-                <th scope="col">วันเกิด</th>
-                <th scope="col">Email</th>
-                <th scope="col">เพศ</th>
-                <th scope="col">วันที่สมัคร</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr id="user-table-loading">
-                <td colspan="7" class="text-center">
-                  <div class="spinner-border text-danger" role="status">
-                    <span class="sr-only">Loading...</span>
-                  </div>
-                </td>
-              </tr>        
-            </tbody>
-          </table>
-          </div>
+      <div class="col-12 text-center my-3 mt-3">
+        <canvas id="myChart" style="width:100%;max-width:600px"></canvas>
       </div>
     </div>
   </div>
-
-  <!-- <div id="navbar-container"></div> -->
 
   <script>
     $(".datepicker").datepicker({
         language:'th-th',
         format:'dd/mm/yyyy',
         autoclose: true
+    });
+  </script>
+  <script src="mymanu.js"></script>
+
+  <script>
+    const xValues = ["Italy", "France", "Spain", "USA", "Argentina"];
+    const yValues = [55, 49, 44, 24, 15];
+    const barColors = [
+      "#b91d47",
+      "#00aba9",
+      "#2b5797",
+      "#e8c3b9",
+      "#1e7145"
+    ];
+    
+    new Chart("myChart", {
+      type: "pie",
+      data: {
+        labels: xValues,
+        datasets: [{
+          backgroundColor: barColors,
+          data: yValues
+        }]
+      },
+      options: {
+        title: {
+          display: true,
+          text: "World Wide Wine Production 2018"
+        }
+      }
     });
   </script>
 
@@ -168,7 +122,12 @@
       $('#user-table-loading').show();
       get_searchName();
     });
-        
+
+    $("#user_log_out").click(function(){
+      localStorage.clear();
+      window.location.href = 'login.html';
+    });
+
     function getData(url_controller) {
 
       fetch(url_controller, {
@@ -176,7 +135,7 @@
         })
         .then(response => response.json())
         .then(data => {
-            console.log(data);
+            // console.log(data); #Dev
             if(data.length > 0){
               crate_data_table(data);
             }else{
@@ -210,7 +169,7 @@
         const get_create_at = new Date(data[i][1]); // create_at
         const create_at = get_create_at.toLocaleDateString('th-TH', options);
 
-        const get_birthdate = new Date(data[i][7]); // birthdate
+        const get_birthdate = new Date(data[i][6]); // birthdate
               get_birthdate.setFullYear(get_birthdate.getFullYear() - 543);
         const birthdate = get_birthdate.toLocaleDateString('th-TH', options);
 
@@ -221,7 +180,7 @@
         tbody = tbody+'<td>'+data[i][3]+'</td>' // last_name
         tbody = tbody+'<td>'+birthdate+'</td>' // birthdate
         tbody = tbody+'<td>'+data[i][4]+'</td>' // e-mail
-        tbody = tbody+'<td>'+data[i][6]+'</td>' // sex
+        tbody = tbody+'<td>'+data[i][5]+'</td>' // sex
         tbody = tbody+'<td>'+create_at+'</td>' // create_at
         //end tr
         tbody = tbody+'</tr>'

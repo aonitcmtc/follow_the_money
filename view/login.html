@@ -40,72 +40,79 @@
 </style>
 <body>
 
-<div class="text-center head-color py-3">
+<div class="container-fluid">
     <div class="row justify-content-center">
-        <div class="col-12 col-md-6 col-lg-6 text-center">
-        <img src="../img/static/my-logo.png" alt="" height="200">
+        <div class="col-12 col-md-6 col-lg-6 head-color text-center py-2">
+        <img src="../img/static/my-logo.png" alt="" height="150">
         </div>
     </div>
-</div>
 
-<div class="row">
-    <div class="col-sm-8 col-md-8 col-lg-8 col-xl-7 mt-5">
-        <div class="ml-5">
-            <a href="../index.html" class="btn btn-outline-danger">
-                <i class="fa fa-home" aria-hidden="true"></i>
-                Home
-            </a>
-        </div>
-
-        <div class="row justify-content-center">
-            <div class="col-12 text-center">
-
-
-            </div>
-        </div>
-
-    </div>
-    <div class="col-sm-4 col-md-4 col-lg-4 col-xl-3 mt-5 f-18">
-        <form method="post" name="hello-sheet">
-            <div class="form-row">
-                <input type="hidden" id="ctrl" name="ctrl" value="checkLogin">
-                <div class="col-md-12 col-xl-10 mb-2">
-                <label for="email_user">Email</label>
-                <input type="text" class="form-control" id="email_user" name="email_user" value="" required>
-
+    <div class="row">
+        <div class="col-12 mx-2">
+            <div class="col-sm-8 col-md-8 col-lg-8 col-xl-7 mt-5">
+                <div class="row justify-content-center">
+                    <div class="col-2 py-2">
+                        <a href="../index.html" class="btn btn-sm btn-outline-danger">
+                        <i class="fa fa-home" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                    <div class="col-8 text-center mt-2">
+                      <!-- Text -->
+                    </div>
+                    <div class="col-2 p-2">
+                      <!-- Text -->
+                    </div>
                 </div>
-                <div class="col-md-12 col-xl-10 mb-2">
-                <label for="password">Password</label>
-                <input type="password" class="form-control" id="password" name="password" value="" required>
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="col-md-12 col-xl-10 mt-2 m-login">
-                    <button id='checkLogin' class="btn btn-primary w-100" type="submit">
-                        <strong>
-                        Login
-                        </strong>
-                    </button>
-                    <div class="mt-2 f-14">
-                        <a href="#">ลืมรหัสผ่าน</p>
+        
+                <div class="row justify-content-center">
+                    <div class="col-12 text-center">
+        
                     </div>
                 </div>
             </div>
-            <div class="form-row">
-                <div class="col-md-12 col-xl-10 mt-2">
-                    <hr>
-                </div>
+            <div class="col-sm-4 col-md-4 col-lg-4 col-xl-3 mt-5 f-18">
+                <form method="post" name="hello-sheet">
+                    <div class="form-row">
+                        <input type="hidden" id="ctrl" name="ctrl" value="checkLogin">
+                        <div class="col-md-12 col-xl-10 mb-2">
+                        <label for="email_user">Email</label>
+                        <input type="text" class="form-control" id="email_user" name="email_user" value="" required>
+        
+                        </div>
+                        <div class="col-md-12 col-xl-10 mb-2">
+                        <label for="password">Password</label>
+                        <input type="password" class="form-control" id="password" name="password" value="" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-12 col-xl-10 mt-2 m-login">
+                            <button id='checkLogin' class="btn btn-primary w-100" type="submit">
+                                <strong>
+                                Login
+                                </strong>
+                            </button>
+                            <div class="mt-2 f-14">
+                                <a href="#">ลืมรหัสผ่าน</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-12 col-xl-10 mt-2">
+                            <hr>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-12 col-xl-10 mt-2">
+                            <a href="singup.html" class="btn btn-success w-100">
+                                <strong>
+                                Sing Up
+                                </strong>
+                            </a>
+                        </div>
+                    </div>
+                </form> 
             </div>
-            <div class="form-row">
-                <div class="col-md-12 col-xl-10 mt-2">
-                    <a href="singup.html" class="btn btn-success w-100">
-                        <strong>
-                        Singup
-                        </strong>
-                    </a>
-                </div>
-            </div>
-        </form> 
+        </div>
     </div>
 </div>
 
@@ -159,7 +166,7 @@
 
         let timerInterval
         Swal.fire({
-            title: 'Welcome To MyBlock',
+            title: 'Welcome To My Block',
             html: '<span class="text-bold">Go to Page in <b></b></span>',
             icon: 'warning',
             timer: 5000,

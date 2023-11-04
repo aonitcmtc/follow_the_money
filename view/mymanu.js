@@ -8,7 +8,9 @@ var nav_code = '<nav class="navbar navbar-expand-lg navbar-dark bg-dark">';
     nav_code += '<span class="navbar-toggler-icon"></span>';
     nav_code += '</button>';
     nav_code += '<div class="collapse navbar-collapse" id="responsive2">'; 
-    nav_code += '<a class="navbar-brand" href="welcome.html">MyBlock</a>';
+    nav_code += '<a class="navbar-brand" href="welcome.html">My Block</a>';
+    nav_code += '<a class="navbar-brand" href="portfolio.html">Portfolio</a>';
+    
     nav_code += '<ul class="navbar-nav mr-auto mt-2 mt-lg-0">';
     nav_code += '<li class="nav-item dropdown">';
     nav_code += '<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown link</a>';

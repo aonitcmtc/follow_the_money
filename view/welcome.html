@@ -16,6 +16,9 @@
     <script type="text/javascript" src="../script/bootstrap-datepicker-thai/js/bootstrap-datepicker.js"></script>
     <script type="text/javascript" src="../script/bootstrap-datepicker-thai/js/bootstrap-datepicker-thai.js"></script>
     <script type="text/javascript" src="../script/bootstrap-datepicker-thai/js/locales/bootstrap-datepicker.th.js"></script>
+    <!-- Chart JS -->
+    <script type="text/javascript" src="../script/ChartJS/Chart_js_2_9_4.js"></script>
+
 </head>
 <style>
   body {
@@ -26,39 +29,36 @@
   .head-color {
     background-color: gold;
   }
+
 </style>
 <body>
 
-  <div class="text-center head-color py-3">
+  
+
+  <div class="container-fluid">
+    <div id="nav_footer" class="col-12" style="padding: 0;"></div>
+
+    <div class="row">
+      <div id="mynavbar" class="col-12" style="padding: 0;"></div>
+    </div>
     <div class="row justify-content-center">
-      <div class="col-12 col-md-6 col-lg-6 text-center">
-        <img src="../img/static/my-logo.png" alt="" height="200">
+      
+      <div class="col-2 px-4 py-2">
+        <a href="../index.html" class="btn btn-sm btn-outline-warning">
+          <i class="fa fa-reply" aria-hidden="true"></i>
+        </a>
+      </div>
+      <div class="col-8 text-center mt-2">
+          <h4 class="text-light">My Block</h4>
+      </div>
+      <div class="col-2 p-2">
+        <!-- text -->
+      </div>
+    <div class="row justify-content-center">
+      <div class="col-12 text-center my-3 mt-3">
+        <canvas id="myChart" style="width:100%;max-width:600px"></canvas>
       </div>
     </div>
-  </div>
-
-  <div class="row justify-content-center">
-    <div id="mynavbar" class="col-12"></div>
-    <div class="col-6 mt-5">
-        <div class="ml-5">
-          <a href="../index.html" class="btn btn-outline-warning">
-            <i class="fa fa-reply" aria-hidden="true"></i>
-            Back 
-          </a>
-        </div>
-    </div>
-    <div class="col-6 text-right mt-5">
-    </div>
-
-  <div class="row justify-content-center">
-    
-    <div class="col-12 text-center my-3 mt-3">
-        <h4>
-            <span class="text-white">รายชื่อสมาชิก </span>
-            <span class="text-danger">Follow The Money</span>
-        </h4>
-    </div>
-    
   </div>
 
   <script>
@@ -69,6 +69,36 @@
     });
   </script>
   <script src="mymanu.js"></script>
+  <script src="nav_footer.js"></script>
+
+  <script>
+    const xValues = ["Italy", "France", "Spain", "USA", "Argentina"];
+    const yValues = [55, 49, 44, 24, 15];
+    const barColors = [
+      "#b91d47",
+      "#00aba9",
+      "#2b5797",
+      "#e8c3b9",
+      "#1e7145"
+    ];
+    
+    new Chart("myChart", {
+      type: "pie",
+      data: {
+        labels: xValues,
+        datasets: [{
+          backgroundColor: barColors,
+          data: yValues
+        }]
+      },
+      options: {
+        title: {
+          display: true,
+          text: "World Wide Wine Production 2018"
+        }
+      }
+    });
+  </script>
 
 </body>
 </html>
@@ -111,7 +141,7 @@
         })
         .then(response => response.json())
         .then(data => {
-            console.log(data);
+            // console.log(data); #Dev
             if(data.length > 0){
               crate_data_table(data);
             }else{
