@@ -25,23 +25,33 @@
     <link rel="stylesheet" href="styles_ajax.css">
   </head>
   <body>
-    <div class="container">
+    <div class="container bg-danger">
       <div class="row">
         <div class="col-12 text-left mt-5">
-          <a href="file:///home/aonitcmtc/Desktop/ajax/index.html" class="btn btn-sm btn-outline-primary">Home</a>
+          <a href="file:///home/aonitcmtc/Desktop/ajax/index.html" class="btn btn-sm btn-outline-warning">Home</a>
         </div>
-        <div class="col-8">
-          <form action="http://localhost:3000/api/login_api" method="post">
-            <input id="username" type="text" placeholder="User" value="admin2"/>
-            <input id="password" type="password" placeholder="Password" value="123456789"/>
-            <input id="location" type="text" placeholder="Location"/>
-            <input id="url" type="text" placeholder="URL"/>
-            <textarea placeholder="Message"></textarea>
-            <div class="d-inline-flex">
-              <input id="send_ajax" type="button" value="Send" />
-              &ensp;<i class="text-warning fa fa-spinner fa-spin" style="font-size:24px; display: none;"></i>
-            </div>
-          </form>
+        <div class="col-7">
+
+          <div class="card-body">
+            <h2 style="margin-bottom: 20px;">เข้าสู่ระบบ</h2>
+              <form class="new_user" id="new_user" action="" accept-charset="UTF-8" method="post">
+                <input name="utf8" type="hidden" value="✓">
+                <input id="set-csrf" type="hidden" name="authenticity_token" value="">
+                <div class="field">
+                  <label for="user_username">บัญชีผู้ใช้</label><br>
+                  <input autofocus="autofocus" class="form-control" type="text" name="user[username]" id="user_username" value="Patchara">
+                </div>
+        
+                <div class="field">
+                  <label for="user_password">รหัสผ่าน</label> <br>
+                  <input autocomplete="off" class="form-control" type="password" name="user[password]" id="user_password" value="25f9e794323b453885f5181f1b624d0b">
+                </div>
+        
+                <div class="actions">
+                  <input id="send_ajax" type="button" name="commit" value="เข้าสู่ระบบ" class="btn btn-primary" style="width: 100%;margin: 10px 0;" data-disable-with="เข้าสู่ระบบ">
+                </div>
+            </form>    
+          </div>
         </div>
         <div class="col-3 mt-5">
           <label for="response">Response ::</label>
@@ -68,72 +78,46 @@
       return md5String;
     }
 
-    // function fixBase64Padding(base64String) {
-    //   while (base64String.length % 4) {
-    //     base64String += '=';
-    //   }
-    //   return base64String;
-    // }
+    //  csrf_token_form
+    $.ajax({
+      url: 'https://dev-www.tilesapp2.com/api/csrf_token',
+      type: 'GET',
+      dataType: 'json',
+      success: function(response) {
+        var csrfToken = response.csrf_token;
+        console.log('CSRF Token:', csrfToken);
+        $('#set-csrf').val(csrfToken)
 
-    fetch('http://jsonip.com?callback=?')
-    .then(response => response.text())
-    .then(data => {
-      jsonpData = data.substring(data.indexOf("{"), data.lastIndexOf("}") + 1);
-      user_location = JSON.parse(jsonpData);
-      console.log(user_location)
-      $('#location').val(user_location.ip)
-      $('#url').val(url)
+        console.log('CSRF Token:', response);
+      },
+      error: function(error) {
+        console.error('Error:', error);
+      }
     });
 
     $('#send_ajax').on('click', function() {
-      // encryptAndLogData('data', 'key_val')
+      event.preventDefault(); 
       $('.fa-spinner').show()
-      var token ={
-          user: $('#username').val(),
-          pass: $('#password').val(),//btoa(encodeToMD5()) ,
-          location: $('#location').val(),
-          url: url
-        }
 
-      token = JSON.stringify(token)
-      console.log(token)
+      // token = JSON.stringify(token)
+      // console.log(token)
+      url_ajax = 'http://localhost:3000/members/sign_in'
+      var formData = $('#new_user').serialize(); 
 
       $.ajax({
-        url: 'http://localhost:3000/api/login_api',
+        url: url_ajax, // Replace with your API endpoint
         type: 'POST',
         dataType: 'json',
-        data: {
-          token: btoa(token),
-          user: $('#username').val(),
-        },
+        data: formData, // Send serialized form data
         success: function(response) {
           console.log('Success:', response);
-          $('#response').val(response.result)
-          // $('#decode64').val(atob(response.result)) // Decode Ajax
-          $('.fa-spinner').hide()
+          $('.fa-spinner').hide();
         },
         error: function(error) {
           console.error('Error:', error);
         }
       });
     });
-
-    // Usage
-    async function encryptAndLogData(data, key_val) {
-      // var encrypted = CryptoJS.AES.encrypt(data, encodeToMD5(key_val));
-      // return encrypted.toString()
-
-      const sign = require('jwt-encode');
-      const secret = 'secret';
-      const is_data = {
-        sub: '1234567890',
-        name: 'John Doe',
-        iat: 1516239022
-      };
-      const jwt = sign(is_data, secret);
-      console.log('jwt::::');
-      console.log(jwt);
-    }
 
   });
 </script>
