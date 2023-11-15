@@ -27,8 +27,11 @@
   <body>
     <div class="container bg-danger">
       <div class="row">
-        <div class="col-12 text-left mt-5">
+        <div class="col-6 text-left mt-5">
           <a href="file:///home/aonitcmtc/Desktop/ajax/index.html" class="btn btn-sm btn-outline-warning">Home</a>
+        </div>
+        <div class="col-6 text-right mt-5">
+          <button id="get_data" type="button" class="btn btn-sm btn-primary">getData</button>
         </div>
         <div class="col-7">
 
@@ -93,6 +96,21 @@
       error: function(error) {
         console.error('Error:', error);
       }
+    });
+
+    // get_data
+    $('#get_data').on('click', function() {
+      $.ajax({
+        url: 'http://localhost:3000/api/login_api',
+        type: 'GET',
+        dataType: 'json',
+        success: function(response) {
+          console.log('Data : ', response);
+        },
+        error: function(error) {
+          console.error('Error:', error);
+        }
+      });
     });
 
     $('#send_ajax').on('click', function() {
